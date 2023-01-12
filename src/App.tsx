@@ -4,20 +4,28 @@ import axios from "axios";
 
 function App() {
   const urlBase = "https://reqres.in/api/products";
-  let params = { page: 1, per_page: 5 };
+  const [ params, setParams ] = useState({ per_page: 5 })
   const [rawProductsData, setRawProductsData] = useState();
   const abortController = new AbortController();
 
+  const getAxios = async (uniqueParams) => {
+    return axios.get(urlBase, { params: uniqueParams, signal: abortController.signal})
+  }
+
   const fetchData = useCallback(async () => {
-    await axios
-      .get(urlBase, { params: params, signal: abortController.signal })
+    await getAxios(params)
       .then((response) => {
-        setRawProductsData(response);
+        setRawProductsData(response.data.data);
+        if(params.per_page !== response.data.total){
+          setParams(previousState => {
+            return { ...previousState, per_page: response.data.total}
+          })
+        }        
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [params]);
 
   const unmountCleanup = () => {
     console.log("unmountCleanup");
@@ -28,7 +36,7 @@ function App() {
     fetchData();
 
     //return () => unmountCleanup();
-  }, [fetchData]);
+  }, [fetchData, params]);
 
   console.log(rawProductsData);
   return (
