@@ -1,2 +1,1 @@
-# codibly-practice-app
-A React SPA application
+# A React typescript app with Vite and Axios
