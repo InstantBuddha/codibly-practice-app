@@ -1,0 +1,8 @@
+.productCard {
+  display: flex;
+  flex-direction: row;
+}
+
+.productCard div {
+  margin: 0.5rem 1rem 0.5rem 1rem;
+}

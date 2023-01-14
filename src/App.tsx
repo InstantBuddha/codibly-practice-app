@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
+import "./styles.css";
 import axios from "axios";
 import ProductList from "./ProductList";
 
@@ -7,7 +8,6 @@ function App() {
   const urlBase = "https://reqres.in/api/products";
   const [params, setParams] = useState({ per_page: 5 });
   const [rawProductsData, setRawProductsData] = useState();
-  const [dataDownloaded, setDataDownloaded] = useState(false);
   const abortController = new AbortController();
 
   const getAxios = async (uniqueParams) => {
@@ -25,7 +25,6 @@ function App() {
           setParams((previousState) => {
             return { ...previousState, per_page: response.data.total };
           });
-          setDataDownloaded(true);
         }
       })
       .catch((error) => {
@@ -48,10 +47,11 @@ function App() {
   return (
     <div className="App">
       <h1>App</h1>
-      {rawProductsData ? 
-        <ProductList rawList={rawProductsData} /> 
-        : 
-        <p>Downloading data...</p>}
+      {rawProductsData ? (
+        <ProductList rawList={rawProductsData} />
+      ) : (
+        <p>Downloading data...</p>
+      )}
     </div>
   );
 }

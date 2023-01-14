@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
- function ProductCard(props) {
+function ProductCard(props) {
   return (
-    <div>
-        <h1>{props.productName} | {props.id}</h1>
+    <div className="productCard" style={{ backgroundColor: props.color }}>
+      <div>{props.id}</div>
+      <div>{props.productName}</div>
+      <div>{props.year}</div>
     </div>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;
