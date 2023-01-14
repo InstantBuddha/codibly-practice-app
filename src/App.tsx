@@ -3,11 +3,17 @@ import "./App.css";
 import "./styles.css";
 import axios from "axios";
 import ProductList from "./ProductList";
+import Searchbar from "./Searchbar";
+import Paginator from "./Paginator";
 
 function App() {
   const urlBase = "https://reqres.in/api/products";
   const [params, setParams] = useState({ per_page: 5 });
   const [rawProductsData, setRawProductsData] = useState();
+  const [displayList, setDisplayList] = useState([]);
+  const [isSearchPerformed, setIsSearchPerformed] = useState(false);
+  const [searchResults, setSearchResults] = useState([])
+  const [currentPage, setCurrentPage] = useState(0);
   const abortController = new AbortController();
 
   const getAxios = async (uniqueParams) => {
@@ -32,6 +38,24 @@ function App() {
       });
   }, [params]);
 
+  const displayContent = () => {
+    if (isSearchPerformed && searchResults.length < 1){
+      return <p>Nothing found</p>
+    }
+    const symbols =
+        searchResults.length > 0
+          ? sliceForPagination(searchResults)
+          : sliceForPagination(rawProductsData);
+    return <ProductList rawList={symbols} />
+  }
+
+  const sliceForPagination = (arrayToSlice) => {
+    return arrayToSlice.slice(
+      currentPage * 5,
+      (currentPage + 1) * 5
+    );
+  };
+
   const unmountCleanup = () => {
     console.log("unmountCleanup");
     abortController.abort();
@@ -48,7 +72,11 @@ function App() {
     <div className="App">
       <h1>App</h1>
       {rawProductsData ? (
-        <ProductList rawList={rawProductsData} />
+        <div>
+          <Searchbar />
+          {displayContent()}
+          <Paginator />
+        </div>
       ) : (
         <p>Downloading data...</p>
       )}
