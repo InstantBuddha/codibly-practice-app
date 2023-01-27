@@ -6,16 +6,23 @@ import ProductList from "./ProductList";
 import Searchbar from "./Searchbar";
 import Paginator from "./Paginator";
 
+type Product = {
+  color: string;
+  id: number;
+  name: string;
+  pantone_value: string
+  year: number;
+}
+
 function App() {
   const urlBase = "https://reqres.in/api/products";
   const [params, setParams] = useState({ per_page: 5 });
-  const [rawProductsData, setRawProductsData] = useState();
+  const [rawProductsData, setRawProductsData] = useState<Product[]>([]);
   const [displayList, setDisplayList] = useState([]);
   const [isSearchPerformed, setIsSearchPerformed] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [lastPage, setLastPage] = useState(99);
-  //add setter!
   const abortController = new AbortController();
 
   const getAxios = async (uniqueParams) => {
@@ -67,6 +74,18 @@ function App() {
     setCurrentPage(0);
   };
 
+  const updateSearchResult = (searchedId) => {
+    const rawSearchResults = rawProductsData.find((product)=>{
+      return searchedId == product.id
+    })
+    setSearchResults(()=>{
+      if(rawSearchResults){return [rawSearchResults]}
+      return [{name: " No items found", id: 99}]
+    });
+    resetPagination(rawSearchResults.length);
+    setIsSearchPerformed(true);
+  };
+
   const unmountCleanup = () => {
     console.log("unmountCleanup");
     abortController.abort();
@@ -78,13 +97,14 @@ function App() {
     //return () => unmountCleanup();
   }, [fetchData, params]);
 
-  console.log(rawProductsData);
+  //console.log(rawProductsData);
   return (
     <div className="App">
       <h1>App</h1>
       {rawProductsData ? (
         <div>
-          <Searchbar />
+          <Searchbar searchId={updateSearchResult}
+                     maxNum={rawProductsData.length}/>
           {displayContent()}
           <Paginator
             currentPage={currentPage}
