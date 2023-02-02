@@ -15,18 +15,17 @@ type Product = {
 }
 
 function App() {
-  const urlBase = "https://reqres.in/api/products";
-  const [params, setParams] = useState({ per_page: 5 });
+  const URL_BASE = "https://reqres.in/api/products";
+  const [params, setParams] = useState<{per_page: number}>({ per_page: 5 });
   const [rawProductsData, setRawProductsData] = useState<Product[]>([]);
-  const [displayList, setDisplayList] = useState([]);
-  const [isSearchPerformed, setIsSearchPerformed] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [lastPage, setLastPage] = useState(99);
+  const [isSearchPerformed, setIsSearchPerformed] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [lastPage, setLastPage] = useState<number>(99);
   const abortController = new AbortController();
 
   const getAxios = async (uniqueParams) => {
-    return axios.get(urlBase, {
+    return axios.get(URL_BASE, {
       params: uniqueParams,
       signal: abortController.signal,
     });
@@ -79,10 +78,11 @@ function App() {
       return searchedId == product.id
     })
     setSearchResults(()=>{
+      console.log(rawSearchResults)
       if(rawSearchResults){return [rawSearchResults]}
-      return [{name: " No items found", id: 99}]
+      return [{name: "No items found", id: 99}]
     });
-    resetPagination(rawSearchResults.length);
+    resetPagination(rawSearchResults?.length);
     setIsSearchPerformed(true);
   };
 
