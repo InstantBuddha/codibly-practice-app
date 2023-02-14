@@ -1,13 +1,22 @@
 import React from "react";
+import { Product } from "./App";
 
-function ProductCard(props) {
+type ProductCardProps = {
+  key: number;
+  productData: Product;
+};
+
+function ProductCard(props: ProductCardProps) {
   return (
-    <div className="productCard" style={{ backgroundColor: props.color }}>
-      <div>{props.id !== 99 && props.id}</div>
-      <div>{props.productName}</div>
-      <div>{props.year}</div>
+    <div
+      className="productCard"
+      style={{ backgroundColor: props.productData.color }}
+    >
+      <div>{props.productData.id !== 99 && props.productData.id}</div>
+      <div>{props.productData.name}</div>
+      <div>{props.productData.year}</div>
     </div>
   );
 }
 
-export default ProductCard;
+export default React.memo(ProductCard);

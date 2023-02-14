@@ -6,8 +6,8 @@ type PaginatorProps = {
 };
 
 function Paginator(props: PaginatorProps) {
-  const LEFT_ARROW:string = "<--";
-  const RIGHT_ARROW:string = "-->";
+  const LEFT_ARROW: string = "<--";
+  const RIGHT_ARROW: string = "-->";
   return (
     <div>
       <button onClick={() => props.changeCurrentPage(false)}>
@@ -19,4 +19,4 @@ function Paginator(props: PaginatorProps) {
     </div>
   );
 }
-export default Paginator;
+export default React.memo(Paginator);

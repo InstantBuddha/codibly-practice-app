@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 type SearchbarProps = {
   updateSearchResult: (searchedId: number) => void;
-  maxNum: number
+  maxNum: number;
 };
 
 function Searchbar(props: SearchbarProps) {
   const [searchTerm, setSearchTerm] = useState<number | string>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    return setSearchTerm(event.target.value.replace(/[^\d]/g, ''));
+    return setSearchTerm(event.target.value.replace(/[^\d]/g, ""));
   };
 
   return (
@@ -22,7 +22,10 @@ function Searchbar(props: SearchbarProps) {
           value={searchTerm}
           onChange={handleChange}
         />
-        <button onClick={() => props.updateSearchResult(searchTerm)} type="submit">
+        <button
+          onClick={() => props.updateSearchResult(searchTerm)}
+          type="submit"
+        >
           Search
         </button>
       </form>
