@@ -6,27 +6,26 @@ import ProductList from "./ProductList";
 import Searchbar from "./Searchbar";
 import Paginator from "./Paginator";
 
-type Product = {
+export type Product = {
   color: string;
   id: number;
   name: string;
-  pantone_value: string
+  pantone_value: string;
   year: number;
-}
+};
 
 function App() {
-  const urlBase = "https://reqres.in/api/products";
-  const [params, setParams] = useState({ per_page: 5 });
+  const URL_BASE: string = "https://reqres.in/api/products";
+  const [params, setParams] = useState<{ per_page: number }>({ per_page: 5 });
   const [rawProductsData, setRawProductsData] = useState<Product[]>([]);
-  const [displayList, setDisplayList] = useState([]);
-  const [isSearchPerformed, setIsSearchPerformed] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [lastPage, setLastPage] = useState(99);
+  const [isSearchPerformed, setIsSearchPerformed] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [lastPage, setLastPage] = useState<number>(99);
   const abortController = new AbortController();
 
-  const getAxios = async (uniqueParams) => {
-    return axios.get(urlBase, {
+  const getAxios = async (uniqueParams: { per_page: number }) => {
+    return axios.get(URL_BASE, {
       params: uniqueParams,
       signal: abortController.signal,
     });
@@ -36,7 +35,7 @@ function App() {
     await getAxios(params)
       .then((response) => {
         setRawProductsData(response.data.data);
-        resetPagination(response.data.data.length)
+        resetPagination(response.data.data.length);
         if (params.per_page !== response.data.total) {
           setParams((previousState) => {
             return { ...previousState, per_page: response.data.total };
@@ -59,30 +58,32 @@ function App() {
     return <ProductList rawList={symbols} />;
   };
 
-  const sliceForPagination = (arrayToSlice) => {
+  const sliceForPagination = (arrayToSlice: Product[]) => {
     return arrayToSlice.slice(currentPage * 5, (currentPage + 1) * 5);
   };
 
-  const changeCurrentPage = (isAddition) => {
+  const changeCurrentPage = (isAddition: boolean) => {
     isAddition
       ? currentPage < lastPage && setCurrentPage(currentPage + 1)
       : currentPage > 0 && setCurrentPage(currentPage - 1);
   };
 
-  const resetPagination = (displayArrLength) => {
+  const resetPagination = (displayArrLength: number) => {
     setLastPage(Math.floor(displayArrLength / 5));
     setCurrentPage(0);
   };
 
-  const updateSearchResult = (searchedId) => {
-    const rawSearchResults = rawProductsData.find((product)=>{
-      return searchedId == product.id
-    })
-    setSearchResults(()=>{
-      if(rawSearchResults){return [rawSearchResults]}
-      return [{name: " No items found", id: 99}]
+  const updateSearchResult = (searchedId: number) => {
+    const rawSearchResults:any = rawProductsData.find((product) => {
+      return searchedId == product.id;
     });
-    resetPagination(rawSearchResults.length);
+    setSearchResults(() => {
+      if (rawSearchResults) {
+        return [rawSearchResults];
+      }
+      return [{ name: "No items found", id: 99 }];
+    });
+    resetPagination(rawSearchResults?.length);
     setIsSearchPerformed(true);
   };
 
@@ -97,14 +98,15 @@ function App() {
     //return () => unmountCleanup();
   }, [fetchData, params]);
 
-  //console.log(rawProductsData);
   return (
     <div className="App">
       <h1>App</h1>
       {rawProductsData ? (
         <div>
-          <Searchbar searchId={updateSearchResult}
-                     maxNum={rawProductsData.length}/>
+          <Searchbar
+            updateSearchResult={updateSearchResult}
+            maxNum={rawProductsData.length}
+          />
           {displayContent()}
           <Paginator
             currentPage={currentPage}
