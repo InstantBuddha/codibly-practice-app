@@ -6,7 +6,7 @@ import ProductList from "./ProductList";
 import Searchbar from "./Searchbar";
 import Paginator from "./Paginator";
 
-type Product = {
+export type Product = {
   color: string;
   id: number;
   name: string;
