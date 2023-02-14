@@ -6,8 +6,8 @@ type PaginatorProps = {
 };
 
 function Paginator(props: PaginatorProps) {
-  const LEFT_ARROW = "<--";
-  const RIGHT_ARROW = "-->";
+  const LEFT_ARROW:string = "<--";
+  const RIGHT_ARROW:string = "-->";
   return (
     <div>
       <button onClick={() => props.changeCurrentPage(false)}>

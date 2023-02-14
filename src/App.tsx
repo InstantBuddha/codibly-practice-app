@@ -15,7 +15,7 @@ type Product = {
 };
 
 function App() {
-  const URL_BASE = "https://reqres.in/api/products";
+  const URL_BASE: string = "https://reqres.in/api/products";
   const [params, setParams] = useState<{ per_page: number }>({ per_page: 5 });
   const [rawProductsData, setRawProductsData] = useState<Product[]>([]);
   const [isSearchPerformed, setIsSearchPerformed] = useState<boolean>(false);
@@ -74,7 +74,7 @@ function App() {
   };
 
   const updateSearchResult = (searchedId: number) => {
-    const rawSearchResults = rawProductsData.find((product) => {
+    const rawSearchResults:any = rawProductsData.find((product) => {
       return searchedId == product.id;
     });
     setSearchResults(() => {
@@ -104,7 +104,7 @@ function App() {
       {rawProductsData ? (
         <div>
           <Searchbar
-            searchId={updateSearchResult}
+            updateSearchResult={updateSearchResult}
             maxNum={rawProductsData.length}
           />
           {displayContent()}
