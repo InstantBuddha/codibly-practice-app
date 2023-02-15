@@ -6,7 +6,7 @@ type SearchbarProps = {
 };
 
 function Searchbar(props: SearchbarProps) {
-  const [searchTerm, setSearchTerm] = useState<number | string>();
+  const [searchTerm, setSearchTerm] = useState<any>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     return setSearchTerm(event.target.value.replace(/[^\d]/g, ""));

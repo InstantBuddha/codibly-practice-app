@@ -58,7 +58,7 @@ function App() {
     return <ProductList rawList={symbols} />;
   };
 
-  const sliceForPagination = (arrayToSlice: Product[]) => {
+  const sliceForPagination = (arrayToSlice: [Product]) => {
     return arrayToSlice.slice(currentPage * 5, (currentPage + 1) * 5);
   };
 
