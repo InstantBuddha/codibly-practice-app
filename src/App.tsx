@@ -14,6 +14,12 @@ export type Product = {
   year: number;
 };
 
+const emptyProduct = {color: "white",
+  id: 99,
+  name: "Downloading data...",
+  pantone_value: "",
+  year: 2022}
+
 function App() {
   const URL_BASE: string = "https://reqres.in/api/products";
   const [params, setParams] = useState<{ per_page: number }>({ per_page: 5 });
