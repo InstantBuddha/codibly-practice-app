@@ -5,7 +5,7 @@ type ProductListProps = {
   rawList: [Product];
 };
 
-function ProductList(props: ProductListProps) {
+function ProductList(props) {
   const mapDisplayProducts = (productsToMap: [Product]) => {
     return productsToMap.map((product) => (
       <ProductCard key={product.id} productData={product} />
