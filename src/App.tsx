@@ -7,18 +7,17 @@ import Searchbar from "./Searchbar";
 import Paginator from "./Paginator";
 
 export type Product = {
-  color: string;
+  color?: string;
   id: number;
   name: string;
-  pantone_value: string;
-  year: number;
+  pantone_value?: string;
+  year?: number;
 };
 
 function App() {
   const URL_BASE: string = "https://reqres.in/api/products";
   const [params, setParams] = useState<{ per_page: number }>({ per_page: 5 });
   const [rawProductsData, setRawProductsData] = useState<Product[]>([]);
-  const [isSearchPerformed, setIsSearchPerformed] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [lastPage, setLastPage] = useState<number>(99);
@@ -48,17 +47,14 @@ function App() {
   }, [params]);
 
   const displayContent = () => {
-    if (isSearchPerformed && searchResults.length < 1) {
-      return <p>Nothing found</p>;
-    }
-    const symbols =
+    const symbols: Product[] =
       searchResults.length > 0
         ? sliceForPagination(searchResults)
         : sliceForPagination(rawProductsData);
     return <ProductList rawList={symbols} />;
   };
 
-  const sliceForPagination = (arrayToSlice: [Product]) => {
+  const sliceForPagination = (arrayToSlice: Array<Product>) => {
     return arrayToSlice.slice(currentPage * 5, (currentPage + 1) * 5);
   };
 
@@ -84,7 +80,6 @@ function App() {
       return [{ name: "No items found", id: 99 }];
     });
     resetPagination(rawSearchResults?.length);
-    setIsSearchPerformed(true);
   };
 
   const unmountCleanup = () => {

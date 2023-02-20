@@ -2,11 +2,12 @@ import { Product } from "./App";
 import ProductCard from "./ProductCard";
 
 type ProductListProps = {
-  rawList: [Product];
+  rawList: Product[];
 };
 
-function ProductList(props) {
-  const mapDisplayProducts = (productsToMap: [Product]) => {
+function ProductList(props: ProductListProps) {
+
+  const mapDisplayProducts = (productsToMap: Product[]) => {
     return productsToMap.map((product) => (
       <ProductCard key={product.id} productData={product} />
     ));
