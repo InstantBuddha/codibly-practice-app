@@ -1,3 +1,47 @@
+body {
+  background-color: #4cc0ff;
+  background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");
+}
+
+.searchbar {
+  margin-bottom: 1rem;
+}
+
+.searchInput {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  margin: 0 0.4rem 0 0.4rem;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.productList {
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.productCard:first-child {
+  border-radius: 8px 8px 0 0;
+  border: 1px solid transparent;
+}
+
+.productCard:last-child {
+  border-radius: 0 0 8px 8px;
+  border: 1px solid transparent;
+}
+
+.productCard:only-child {
+  border-radius: 8px 8px 8px 8px;
+  border: 1px solid transparent;
+  background-color: gray;
+  font-weight: 500;
+  color: darkred;
+  display: flex;
+  justify-content: center;
+}
+
 .productCard {
   display: flex;
   flex-direction: row;
@@ -5,4 +49,12 @@
 
 .productCard div {
   margin: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.paginator {
+  padding-top: 1rem;
+}
+
+.paginateBtn {
+  margin: 0.2rem;
 }

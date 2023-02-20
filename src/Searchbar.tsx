@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 type SearchbarProps = {
   updateSearchResult: (searchedId: number) => void;
+  displayFullList: () => void;
   maxNum: number;
 };
 
@@ -13,14 +14,16 @@ function Searchbar(props: SearchbarProps) {
   };
 
   return (
-    <div>
+    <div className="searchbar">
       <form onSubmit={(e) => e.preventDefault()}>
+        <button onClick={props.displayFullList}>Home</button>
         <input
           type="text"
           inputMode="numeric"
           name="search"
           value={searchTerm}
           onChange={handleChange}
+          className="searchInput"
         />
         <button
           onClick={() => props.updateSearchResult(searchTerm)}

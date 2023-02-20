@@ -6,7 +6,6 @@ type ProductListProps = {
 };
 
 function ProductList(props: ProductListProps) {
-
   const mapDisplayProducts = (productsToMap: Product[]) => {
     return productsToMap.map((product) => (
       <ProductCard key={product.id} productData={product} />
@@ -15,8 +14,7 @@ function ProductList(props: ProductListProps) {
 
   return (
     <div>
-      <h1>ProductList</h1>
-      <div>{mapDisplayProducts(props.rawList)}</div>
+      <div className="productList">{mapDisplayProducts(props.rawList)}</div>
     </div>
   );
 }
