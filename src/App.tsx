@@ -70,7 +70,7 @@ function App() {
   };
 
   const updateSearchResult = (searchedId: number) => {
-    const rawSearchResults:any = rawProductsData.find((product) => {
+    const rawSearchResults: any = rawProductsData.find((product) => {
       return searchedId == product.id;
     });
     setSearchResults(() => {
@@ -87,19 +87,23 @@ function App() {
     abortController.abort();
   };
 
+  const displayFullList = () => {
+    resetPagination(rawProductsData.length);
+    setSearchResults([]);
+  };
+
   useEffect(() => {
     fetchData();
-
     //return () => unmountCleanup();
   }, [fetchData, params]);
 
   return (
     <div className="App">
-      <h1>App</h1>
       {rawProductsData ? (
         <div>
           <Searchbar
             updateSearchResult={updateSearchResult}
+            displayFullList={displayFullList}
             maxNum={rawProductsData.length}
           />
           {displayContent()}
