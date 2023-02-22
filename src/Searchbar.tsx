@@ -13,6 +13,11 @@ function Searchbar(props: SearchbarProps) {
     return setSearchTerm(event.target.value.replace(/[^\d]/g, ""));
   };
 
+  const submitSearch = () => {
+    setSearchTerm("");
+    return props.updateSearchResult(searchTerm);
+  };
+
   return (
     <div className="searchbar">
       <form onSubmit={(e) => e.preventDefault()}>
@@ -25,10 +30,7 @@ function Searchbar(props: SearchbarProps) {
           onChange={handleChange}
           className="searchInput"
         />
-        <button
-          onClick={() => props.updateSearchResult(searchTerm)}
-          type="submit"
-        >
+        <button onClick={submitSearch} type="submit">
           Search
         </button>
       </form>
