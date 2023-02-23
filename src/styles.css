@@ -5,6 +5,7 @@ body {
 
 .searchbar {
   margin-bottom: 1rem;
+  flex-wrap: nowrap;
 }
 
 .searchInput {
@@ -57,4 +58,16 @@ body {
 
 .paginateBtn {
   margin: 0.2rem;
+}
+
+@media (orientation: portrait) {
+  .searchInput {
+    padding: 0.6em 0.2em;
+    width: 46%;
+  }
+
+  .searchbar button {
+    padding: 0.6em 0.2em;
+    width: 22%;
+  }
 }
